@@ -1,5 +1,6 @@
 package com.example.mas_final.viewLayers.views.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.mas_final.data.dao.HelloDao
@@ -8,6 +9,7 @@ import com.example.mas_final.data.entity.VAResponse
 import com.example.mas_final.databinding.ActivityMainBinding
 import com.example.mas_final.helpers.Preferences
 import com.example.mas_final.repositories.HelloRepository
+import com.example.mas_final.viewLayers.views.register.RegisterActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,17 +28,6 @@ class MainActivity : AppCompatActivity() {
 		setContentView(binding.root)
 
 
-		binding.test.setOnClickListener {
-			CoroutineScope(Dispatchers.IO).launch {
-				when(val res = helloRepo.hello()) {
-					is VAResponse.OnOk -> {
-						println(res.res)
-					}
-					is VAResponse.OnError -> {
-						println(res.error)
-					}
-				}
-			}
-		}
+		startActivity(Intent(this, RegisterActivity::class.java))
 	}
 }

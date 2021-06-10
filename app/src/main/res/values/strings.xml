@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MAS_FINAL</string>
+    <string name="valdar">VladAr</string>
+    <string name="sign_up">Sign up</string>
+    <string name="name">Name</string>
 </resources>
