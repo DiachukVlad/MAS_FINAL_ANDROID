@@ -6,9 +6,9 @@
     android:orientation="horizontal"
     android:background="@drawable/edit_text_bg"
     android:gravity="center_vertical"
-    android:elevation="4dp"
     android:layout_marginHorizontal="24dp"
-    android:layout_marginBottom="14dp">
+    android:layout_marginBottom="12dp"
+    android:layout_marginTop="4dp">
 
     <ImageView
         android:id="@+id/image"
@@ -25,6 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         tools:hint="@string/name"
-        style="@style/EditTextHint"
-        android:background="#00000000"/>
+        android:background="@color/transparent"
+        android:maxLines="1"
+        android:inputType="text"
+        android:scrollHorizontally="true"
+        android:ellipsize="end"/>
 </LinearLayout>

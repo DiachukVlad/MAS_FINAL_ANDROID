@@ -3,4 +3,12 @@
     <string name="valdar">VladAr</string>
     <string name="sign_up">Sign up</string>
     <string name="name">Name</string>
+    <string name="next">Next</string>
+    <string name="ok">Ok</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="surname">Surname</string>
+    <string name="phone">Phone</string>
+    <string name="extra_phone">Extra phone</string>
+    <string name="location">Location</string>
 </resources>

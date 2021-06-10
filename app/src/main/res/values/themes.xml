@@ -1,21 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MAS_FINAL" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.MAS_FINAL" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/main_green</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/main_green</item>
         <!-- Customize your theme here. -->
-    </style>
-
-    <style name="EditTextHint" parent="TextAppearance.AppCompat">
-        <item name="colorAccent">@android:color/white</item>
         <item name="android:textColorHint">@color/black</item>
         <item name="colorControlNormal">@color/black</item>
-        <item name="colorControlActivated">@color/black</item>
-        <item name="colorControlHighlight">@color/white</item>
+        <item name="colorControlActivated">@color/main_green</item>
     </style>
 </resources>

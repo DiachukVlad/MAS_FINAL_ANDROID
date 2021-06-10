@@ -10,7 +10,7 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:text="@string/valdar"
         android:textSize="48sp"
         android:textColor="@color/main_green"
@@ -22,12 +22,96 @@
         android:text="@string/sign_up"
         android:textSize="18sp"
         android:textColor="@color/black"
+        android:layout_marginBottom="16dp"
         />
 
     <com.example.mas_final.viewLayers.components.VAEditText
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:hintText="Name"
+        app:hintText="@string/email"
         app:icon="@drawable/ic_person"/>
+
+    <com.example.mas_final.viewLayers.components.VAEditText
+        android:id="@+id/pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintText="@string/password"
+        app:icon="@drawable/ic_person"
+        app:password="true"/>
+
+    <com.example.mas_final.viewLayers.components.VAEditText
+        android:id="@+id/pass_second"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintText="@string/password"
+        app:icon="@drawable/ic_person"
+        app:password="true"/>
+
+    <com.example.mas_final.viewLayers.components.VAEditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintText="@string/name"
+        app:icon="@drawable/ic_person"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <com.example.mas_final.viewLayers.components.VAEditText
+        android:id="@+id/surname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintText="@string/surname"
+        app:icon="@drawable/ic_person"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <com.example.mas_final.viewLayers.components.VAEditText
+        android:id="@+id/birthday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintText="Birthday"
+        app:icon="@drawable/ic_person"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <com.example.mas_final.viewLayers.components.VAEditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintText="@string/phone"
+        app:icon="@drawable/ic_person"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <com.example.mas_final.viewLayers.components.VAEditText
+        android:id="@+id/extra_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintText="@string/extra_phone"
+        app:icon="@drawable/ic_person"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <com.example.mas_final.viewLayers.components.VAEditText
+        android:id="@+id/location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintText="@string/location"
+        app:icon="@drawable/ic_person"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+
+    <TextView
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        android:textColor="@color/white"
+        android:background="@drawable/green_btn"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="52dp"
+        android:layout_marginTop="32dp"/>
 
 </LinearLayout>

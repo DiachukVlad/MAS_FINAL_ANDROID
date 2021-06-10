@@ -3,5 +3,6 @@
     <declare-styleable name="VAEditText">
         <attr name="icon" format="reference" />
         <attr name="hintText" format="string"/>
+        <attr name="password" format="boolean"/>
     </declare-styleable>
 </resources>
