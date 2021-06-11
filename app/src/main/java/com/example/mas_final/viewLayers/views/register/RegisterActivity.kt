@@ -9,7 +9,6 @@ import com.example.mas_final.extentions.launchWhenCreated
 import com.example.mas_final.viewLayers.views.base.BaseActivity
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -30,12 +29,12 @@ class RegisterActivity : BaseActivity() {
         showState()
         showButtonText()
         showError()
-        showDatePicker()
         showBirthday()
 
-        vm.closeActivity.onEach {
-            if (it) {
-                finish()
+        vm.activityEvent.onEach {
+            when (it) {
+                is RegisterViewModel.ActivityEvents.CloseActivity -> finish()
+                is RegisterViewModel.ActivityEvents.ShowDatePicker -> showDatePicker(it.time)
             }
         }.launchWhenCreated(lifecycleScope)
     }
@@ -46,22 +45,20 @@ class RegisterActivity : BaseActivity() {
         }.launchWhenCreated(lifecycleScope)
     }
 
-    private fun showDatePicker() {
-        val datePickerBuilder =  MaterialDatePicker.Builder.datePicker()
+    private fun showDatePicker(dateToShow: Long) {
+        val datePickerBuilder = MaterialDatePicker.Builder.datePicker()
             .setTitleText("Select date")
         var datePicker: MaterialDatePicker<Long> = datePickerBuilder.build()
 
-        vm.showDatePicker.onEach { dateToShow ->
-            if (dateToShow != 0L) {
-                datePickerBuilder.setSelection(dateToShow)
-                datePicker = datePickerBuilder.build()
-                datePicker.show(supportFragmentManager, null)
+        if (dateToShow != 0L) {
+            datePickerBuilder.setSelection(dateToShow)
+            datePicker = datePickerBuilder.build()
+            datePicker.show(supportFragmentManager, null)
 
-                datePicker.addOnPositiveButtonClickListener {
-                    vm.onDateChange(it)
-                }
+            datePicker.addOnPositiveButtonClickListener {
+                vm.onDateChange(it)
             }
-        }.launchWhenCreated(lifecycleScope)
+        }
     }
 
     private fun showError() {

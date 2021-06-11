@@ -1,11 +1,9 @@
 package com.example.mas_final.viewLayers.views.register
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.mas_final.R
 import com.example.mas_final.data.dto.PersonDTO
-import com.example.mas_final.data.dto.VAError
 import com.example.mas_final.data.entity.Error
 import com.example.mas_final.data.entity.Ok
 import com.example.mas_final.extentions.sha256
@@ -13,6 +11,7 @@ import com.example.mas_final.extentions.uiScope
 import com.example.mas_final.helpers.Preferences
 import com.example.mas_final.helpers.StringProvider
 import com.example.mas_final.repositories.PersonRepository
+import com.example.mas_final.viewLayers.views.base.BaseViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,23 +21,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class RegisterViewModel(
-    application: Application, private val strings: StringProvider,
+    application: Application, strings: StringProvider,
     private val prefs: Preferences,
     private val personRepo: PersonRepository
-) : AndroidViewModel(application) {
+) : BaseViewModel(application, strings) {
     val state = MutableStateFlow(VisibilityState.First)
     val buttonText = MutableStateFlow(strings.get(R.string.next))
     var birthdayText = MutableStateFlow(strings.get(R.string.birthday))
 
-    val showDatePicker = MutableSharedFlow<Long>(
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-    val error = MutableSharedFlow<String>(
-            extraBufferCapacity = 1,
-            onBufferOverflow = BufferOverflow.DROP_OLDEST
-        )
-    val closeActivity = MutableSharedFlow<Boolean>(
+    val activityEvent = MutableSharedFlow<ActivityEvents>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
@@ -74,7 +65,7 @@ class RegisterViewModel(
     }
 
     fun onBirthdayClick() {
-        showDatePicker.tryEmit(birthday)
+        activityEvent.tryEmit(ActivityEvents.ShowDatePicker(birthday))
     }
 
     fun onDateChange(time: Long) {
@@ -91,7 +82,7 @@ class RegisterViewModel(
                 prefs.token = res.body
                 prefs.person = person
 
-                closeActivity.tryEmit(true)
+                activityEvent.tryEmit(ActivityEvents.CloseActivity)
             }
             is Error -> {
                 showCommonError(res.error)
@@ -168,14 +159,6 @@ class RegisterViewModel(
         }
     }
 
-    private fun showCommonError(vaError: VAError) {
-        when (vaError) {
-            VAError.ServerIsUnavailable -> error.tryEmit(strings.get(R.string.server_is_unavailable))
-            else -> error.tryEmit(strings.get(R.string.unexpected_error))
-        }
-    }
-
-
     enum class VisibilityState(
         val email: Boolean = false,
         val pass: Boolean = false,
@@ -189,5 +172,10 @@ class RegisterViewModel(
     ) {
         First(true, true, true),
         Second(false, false, false, true, true, true, true, true, true)
+    }
+
+    sealed class ActivityEvents {
+        class ShowDatePicker(val time: Long) : ActivityEvents()
+        object CloseActivity: ActivityEvents()
     }
 }

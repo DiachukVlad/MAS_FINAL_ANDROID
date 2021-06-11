@@ -24,6 +24,7 @@ open class BaseRepository {
         } catch (e: ConnectException) {
             return Error(VAError.ServerIsUnavailable)
         } catch (e: Exception) {
+            println(e)
             return Error(VAError.UnexpectedError)
         }
     }

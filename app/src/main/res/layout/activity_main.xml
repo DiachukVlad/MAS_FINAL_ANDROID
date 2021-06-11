@@ -8,11 +8,22 @@
     android:orientation="vertical"
     >
 
-    <Button
+    <TextView
         android:id="@+id/test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Test"
+        android:textSize="18sp"
         />
 
+    <TextView
+        android:id="@+id/exit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/exit"
+        android:textColor="@color/white"
+        android:background="@drawable/green_btn"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="52dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="24dp" />
 </LinearLayout>
