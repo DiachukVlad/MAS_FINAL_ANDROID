@@ -32,6 +32,12 @@ class RegisterActivity : BaseActivity() {
         showError()
         showDatePicker()
         showBirthday()
+
+        vm.closeActivity.onEach {
+            if (it) {
+                finish()
+            }
+        }.launchWhenCreated(lifecycleScope)
     }
 
     private fun showBirthday() {

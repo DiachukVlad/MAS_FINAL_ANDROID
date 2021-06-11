@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MAS_FINAL"
         android:usesCleartextTraffic="true">
-        <activity android:name=".viewLayers.views.register.RegisterActivity"></activity>
+        <activity
+            android:name=".viewLayers.views.register.RegisterActivity"
+            android:windowSoftInputMode="adjustResize" />
+
         <activity android:name=".viewLayers.views.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

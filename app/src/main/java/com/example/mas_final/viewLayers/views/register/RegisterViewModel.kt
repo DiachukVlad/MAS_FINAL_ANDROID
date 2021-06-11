@@ -151,9 +151,9 @@ class RegisterViewModel(
             return false
         }
 
-        when (val res = personRepo.checkEmail(email.value ?: "")) {
+        return when (val res = personRepo.checkEmail(email.value ?: "")) {
             is Ok -> {
-                return if (res.body) { //if email exists
+                if (res.body) { //if email exists
                     error.tryEmit(strings.get(R.string.email_exists))
                     false
                 } else {
@@ -161,9 +161,11 @@ class RegisterViewModel(
                 }
             }
 
-            is Error -> showCommonError(res.error)
+            is Error -> {
+                showCommonError(res.error)
+                false
+            }
         }
-        return true
     }
 
     private fun showCommonError(vaError: VAError) {
