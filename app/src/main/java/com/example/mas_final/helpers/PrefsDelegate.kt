@@ -8,7 +8,7 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
 
-class PrefsDelegate<T>(private val key: String, private val default: T, private val clazz: KClass<TokenDTO>? = null) {
+class PrefsDelegate<T>(private val key: String, private val default: T, private val clazz: KClass<out Any>? = null) {
     private val sharedPreferences: SharedPreferences = get(SharedPreferences::class.java)
 
     @Suppress("UNCHECKED_CAST")

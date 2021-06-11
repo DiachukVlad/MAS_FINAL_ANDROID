@@ -5,9 +5,11 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.example.mas_final.R
 import com.example.mas_final.databinding.ActivityRegisterBinding
+import com.example.mas_final.extentions.launchWhenCreated
 import com.example.mas_final.viewLayers.views.base.BaseActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class RegisterActivity : BaseActivity() {
@@ -23,19 +25,17 @@ class RegisterActivity : BaseActivity() {
 
         binding.button.setOnClickListener { vm.onButtonClick() }
 
-        lifecycleScope.launchWhenCreated {
-            showState()
-            showButtonText()
-            showError()
-        }
+        showState()
+        showButtonText()
+        showError()
     }
 
-    private suspend fun showError() {
-        vm.error.collect {
+    private fun showError() {
+        vm.error.onEach {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT)
                 .setBackgroundTint(getColor(R.color.red))
                 .show()
-        }
+        }.launchWhenCreated(lifecycleScope)
     }
 
     override fun connectToLiveData() = binding.run {
@@ -53,13 +53,13 @@ class RegisterActivity : BaseActivity() {
     }
 
     private fun showButtonText() {
-        vm.buttonText.observeForever {
+        vm.buttonText.onEach {
             binding.button.text = it
-        }
+        }.launchWhenCreated(lifecycleScope)
     }
 
     private fun showState() {
-        vm.state.observeForever {
+        vm.state.onEach {
             with(binding) {
                 email.isVisible = it.email
                 pass.isVisible = it.pass
@@ -71,6 +71,6 @@ class RegisterActivity : BaseActivity() {
                 extraPhone.isVisible = it.extraPhone
                 location.isVisible = it.location
             }
-        }
+        }.launchWhenCreated(lifecycleScope)
     }
 }

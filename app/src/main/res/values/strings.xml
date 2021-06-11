@@ -12,4 +12,10 @@
     <string name="extra_phone">Extra phone</string>
     <string name="location">Location</string>
     <string name="enter_email">You need to enter email!</string>
+    <string name="bad_email">Bad email</string>
+    <string name="email_exists">This email exists already.</string>
+    <string name="server_is_unavailable">Server is unavailable</string>
+    <string name="unexpected_error">Unexpected error</string>
+    <string name="all_fields_is_required">All fields must be full</string>
+    <string name="passwords_must_be_equal">Passwords must be equal</string>
 </resources>
