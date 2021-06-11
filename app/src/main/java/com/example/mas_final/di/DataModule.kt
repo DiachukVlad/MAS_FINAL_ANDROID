@@ -3,10 +3,10 @@ package com.example.mas_final.di
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.mas_final.VAApplication
-import com.example.mas_final.data.dao.HelloDao
+import com.example.mas_final.data.dao.PersonDao
 import com.example.mas_final.helpers.Preferences
 import com.example.mas_final.helpers.StringProvider
-import com.example.mas_final.repositories.HelloRepository
+import com.example.mas_final.repositories.PersonRepository
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -33,10 +33,13 @@ val dataModule = module {
             .build()
     }
 
-    factory { get<Retrofit>().create(HelloDao::class.java) }
+    /**
+     * DAOs
+     */
+    factory { get<Retrofit>().create(PersonDao::class.java) }
 
     /**
      * Repos
      */
-    factory { HelloRepository(get()) }
+    factory { PersonRepository(get()) }
 }

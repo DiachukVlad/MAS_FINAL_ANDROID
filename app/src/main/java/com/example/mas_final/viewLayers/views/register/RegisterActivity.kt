@@ -1,37 +1,64 @@
 package com.example.mas_final.viewLayers.views.register
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.method.PasswordTransformationMethod
-import android.widget.EditText
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import com.example.mas_final.R
 import com.example.mas_final.databinding.ActivityRegisterBinding
+import com.example.mas_final.viewLayers.views.base.BaseActivity
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.collect
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : BaseActivity() {
     lateinit var binding: ActivityRegisterBinding
 
     private val vm: RegisterViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityRegisterBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
-        observeState()
-        observeButtonText()
-
         binding.button.setOnClickListener { vm.onButtonClick() }
+
+        lifecycleScope.launchWhenCreated {
+            showState()
+            showButtonText()
+            showError()
+        }
     }
 
-    private fun observeButtonText() {
+    private suspend fun showError() {
+        vm.error.collect {
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(getColor(R.color.red))
+                .show()
+        }
+    }
+
+    override fun connectToLiveData() = binding.run {
+        arrayOf(
+            email to vm.email,
+            pass to vm.pass,
+            passSecond to vm.passSecond,
+            name to vm.name,
+            surname to vm.surname,
+            birthday to vm.birthday,
+            phone to vm.phone,
+            extraPhone to vm.extraPhone,
+            location to vm.location
+        )
+    }
+
+    private fun showButtonText() {
         vm.buttonText.observeForever {
             binding.button.text = it
         }
     }
 
-    private fun observeState() {
+    private fun showState() {
         vm.state.observeForever {
             with(binding) {
                 email.isVisible = it.email
