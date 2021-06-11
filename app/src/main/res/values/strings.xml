@@ -18,4 +18,5 @@
     <string name="unexpected_error">Unexpected error</string>
     <string name="all_fields_is_required">All fields must be full</string>
     <string name="passwords_must_be_equal">Passwords must be equal</string>
+    <string name="birthday">Birthday</string>
 </resources>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="VAEditText">
+    <declare-styleable name="VAField">
         <attr name="icon" format="reference" />
         <attr name="hintText" format="string"/>
         <attr name="password" format="boolean"/>
+        <attr name="isButton" format="boolean"/>
     </declare-styleable>
 </resources>

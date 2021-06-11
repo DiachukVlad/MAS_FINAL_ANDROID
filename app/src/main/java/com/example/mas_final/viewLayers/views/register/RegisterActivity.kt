@@ -7,6 +7,7 @@ import com.example.mas_final.R
 import com.example.mas_final.databinding.ActivityRegisterBinding
 import com.example.mas_final.extentions.launchWhenCreated
 import com.example.mas_final.viewLayers.views.base.BaseActivity
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -24,10 +25,37 @@ class RegisterActivity : BaseActivity() {
         setContentView(binding.root)
 
         binding.button.setOnClickListener { vm.onButtonClick() }
+        binding.birthday.setOnClickListener { vm.onBirthdayClick() }
 
         showState()
         showButtonText()
         showError()
+        showDatePicker()
+        showBirthday()
+    }
+
+    private fun showBirthday() {
+        vm.birthdayText.onEach {
+            binding.birthday.text = it
+        }.launchWhenCreated(lifecycleScope)
+    }
+
+    private fun showDatePicker() {
+        val datePickerBuilder =  MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Select date")
+        var datePicker: MaterialDatePicker<Long> = datePickerBuilder.build()
+
+        vm.showDatePicker.onEach { dateToShow ->
+            if (dateToShow != 0L) {
+                datePickerBuilder.setSelection(dateToShow)
+                datePicker = datePickerBuilder.build()
+                datePicker.show(supportFragmentManager, null)
+
+                datePicker.addOnPositiveButtonClickListener {
+                    vm.onDateChange(it)
+                }
+            }
+        }.launchWhenCreated(lifecycleScope)
     }
 
     private fun showError() {
@@ -45,7 +73,6 @@ class RegisterActivity : BaseActivity() {
             passSecond to vm.passSecond,
             name to vm.name,
             surname to vm.surname,
-            birthday to vm.birthday,
             phone to vm.phone,
             extraPhone to vm.extraPhone,
             location to vm.location

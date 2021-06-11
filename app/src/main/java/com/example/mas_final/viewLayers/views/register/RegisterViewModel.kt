@@ -17,29 +17,42 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RegisterViewModel(
     application: Application, private val strings: StringProvider,
     private val prefs: Preferences,
     private val personRepo: PersonRepository
 ) : AndroidViewModel(application) {
-    var state = MutableStateFlow(VisibilityState.First)
-    var buttonText = MutableStateFlow(strings.get(R.string.next))
+    val state = MutableStateFlow(VisibilityState.First)
+    val buttonText = MutableStateFlow(strings.get(R.string.next))
+    var birthdayText = MutableStateFlow(strings.get(R.string.birthday))
 
-    var error: MutableSharedFlow<String> =
-        MutableSharedFlow(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
-    var closeActivity: MutableSharedFlow<String> =
-        MutableSharedFlow(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    val showDatePicker = MutableSharedFlow<Long>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val error = MutableSharedFlow<String>(
+            extraBufferCapacity = 1,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST
+        )
+    val closeActivity = MutableSharedFlow<Boolean>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
 
     var email = MutableLiveData<String>()
     var pass = MutableLiveData<String>()
     var passSecond = MutableLiveData<String>()
     var name = MutableLiveData<String>()
     var surname = MutableLiveData<String>()
-    var birthday = MutableLiveData<String>()
     var phone = MutableLiveData<String>()
     var extraPhone = MutableLiveData<String>()
     var location = MutableLiveData<String>()
+
+    var birthday = System.currentTimeMillis()
 
     fun onButtonClick() {
         uiScope.launch {
@@ -60,15 +73,25 @@ class RegisterViewModel(
         }
     }
 
+    fun onBirthdayClick() {
+        showDatePicker.tryEmit(birthday)
+    }
+
+    fun onDateChange(time: Long) {
+        birthday = time
+        val date: Date = Calendar.getInstance().apply { timeInMillis = time }.time
+        val dateFormat: DateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        birthdayText.tryEmit(dateFormat.format(date))
+    }
+
     private suspend fun register() {
         val person = buildPerson()
-        when(val res = personRepo.register(person)) {
+        when (val res = personRepo.register(person)) {
             is Ok -> {
                 prefs.token = res.body
                 prefs.person = person
 
-                println(prefs.token)
-                println(prefs.person)
+                closeActivity.tryEmit(true)
             }
             is Error -> {
                 showCommonError(res.error)
@@ -79,11 +102,12 @@ class RegisterViewModel(
     private fun buildPerson() = PersonDTO(
         name.value!!,
         surname.value!!,
-        //TODO date
-        0L,
+        birthday,
         location.value!!,
-        listOf(phone.value!!,
-            extraPhone.value!!),
+        listOf(
+            phone.value!!,
+            extraPhone.value!!
+        ),
         email.value!!,
         sha256(pass.value!!),
     )
@@ -108,7 +132,7 @@ class RegisterViewModel(
 
         val someEmptySecond = name.value.isNullOrEmpty() ||
                 surname.value.isNullOrEmpty() ||
-                birthday.value.isNullOrEmpty() ||
+                birthday == 0L ||
                 phone.value.isNullOrEmpty() ||
                 extraPhone.value.isNullOrEmpty() ||
                 location.value.isNullOrEmpty()

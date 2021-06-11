@@ -25,14 +25,14 @@
         android:layout_marginBottom="16dp"
         />
 
-    <com.example.mas_final.viewLayers.components.VAEditText
+    <com.example.mas_final.viewLayers.components.VAField
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:hintText="@string/email"
         app:icon="@drawable/ic_person"/>
 
-    <com.example.mas_final.viewLayers.components.VAEditText
+    <com.example.mas_final.viewLayers.components.VAField
         android:id="@+id/pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         app:icon="@drawable/ic_person"
         app:password="true"/>
 
-    <com.example.mas_final.viewLayers.components.VAEditText
+    <com.example.mas_final.viewLayers.components.VAField
         android:id="@+id/pass_second"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:icon="@drawable/ic_person"
         app:password="true"/>
 
-    <com.example.mas_final.viewLayers.components.VAEditText
+    <com.example.mas_final.viewLayers.components.VAField
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
         android:visibility="gone"
         tools:visibility="visible"/>
 
-    <com.example.mas_final.viewLayers.components.VAEditText
+    <com.example.mas_final.viewLayers.components.VAField
         android:id="@+id/surname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,16 +66,17 @@
         android:visibility="gone"
         tools:visibility="visible"/>
 
-    <com.example.mas_final.viewLayers.components.VAEditText
+    <com.example.mas_final.viewLayers.components.VAField
         android:id="@+id/birthday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:hintText="Birthday"
+        app:hintText="@string/birthday"
         app:icon="@drawable/ic_person"
         android:visibility="gone"
+        app:isButton="true"
         tools:visibility="visible"/>
 
-    <com.example.mas_final.viewLayers.components.VAEditText
+    <com.example.mas_final.viewLayers.components.VAField
         android:id="@+id/phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -84,7 +85,7 @@
         android:visibility="gone"
         tools:visibility="visible"/>
 
-    <com.example.mas_final.viewLayers.components.VAEditText
+    <com.example.mas_final.viewLayers.components.VAField
         android:id="@+id/extra_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,7 +94,7 @@
         android:visibility="gone"
         tools:visibility="visible"/>
 
-    <com.example.mas_final.viewLayers.components.VAEditText
+    <com.example.mas_final.viewLayers.components.VAField
         android:id="@+id/location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

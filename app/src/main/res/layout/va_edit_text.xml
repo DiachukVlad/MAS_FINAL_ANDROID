@@ -30,4 +30,17 @@
         android:inputType="text"
         android:scrollHorizontally="true"
         android:ellipsize="end"/>
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:background="@color/transparent"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:ellipsize="end"
+        android:visibility="gone"/>
 </LinearLayout>

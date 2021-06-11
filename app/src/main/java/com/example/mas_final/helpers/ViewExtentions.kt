@@ -3,7 +3,7 @@ package com.example.mas_final.helpers
 import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.MutableLiveData
-import com.example.mas_final.viewLayers.components.VAEditText
+import com.example.mas_final.viewLayers.components.VAField
 
 fun EditText.connectToLiveData(data: MutableLiveData<String>) {
     this.doOnTextChanged { text, _, _, _ ->
@@ -16,6 +16,6 @@ fun EditText.connectToLiveData(data: MutableLiveData<String>) {
     }
 }
 
-fun VAEditText.connectToLiveData(data: MutableLiveData<String>) {
+fun VAField.connectToLiveData(data: MutableLiveData<String>) {
     binding.editText.connectToLiveData(data)
 }
