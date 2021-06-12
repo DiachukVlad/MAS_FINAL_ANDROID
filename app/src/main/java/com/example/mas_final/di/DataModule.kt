@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.mas_final.VAApplication
 import com.example.mas_final.data.dao.PersonDao
+import com.example.mas_final.data.dao.ReservationDao
 import com.example.mas_final.helpers.Preferences
 import com.example.mas_final.helpers.StringProvider
 import com.example.mas_final.repositories.PersonRepository
+import com.example.mas_final.repositories.ReservationRepository
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -37,9 +39,11 @@ val dataModule = module {
      * DAOs
      */
     factory { get<Retrofit>().create(PersonDao::class.java) }
+    factory { get<Retrofit>().create(ReservationDao::class.java) }
 
     /**
      * Repos
      */
     factory { PersonRepository(get()) }
+    factory { ReservationRepository(get()) }
 }

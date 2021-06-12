@@ -1,11 +1,10 @@
 package com.example.mas_final.data.dto
 
 
-class ReservationDTO(
+data class ReservationDTO(
     var dateFrom: Long? = null,
     var dateTo: Long? = null,
-    var token: TokenDTO? = null
-) {
-    var reservationObjects: MutableList<ReservationObject> = arrayListOf()
-}
-
+    var token: TokenDTO? = null,
+    var rooms: MutableList<Room> = arrayListOf(),
+    var houses: MutableList<House> = arrayListOf()
+)

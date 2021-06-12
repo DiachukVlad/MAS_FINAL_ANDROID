@@ -25,4 +25,5 @@
     <string name="exit">Exit</string>
     <string name="book">Book</string>
     <string name="bad_login">Bad email or password</string>
+    <string name="rooms">Rooms</string>
 </resources>

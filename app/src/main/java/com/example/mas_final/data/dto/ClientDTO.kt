@@ -14,6 +14,6 @@ class ClientDTO(
     var reservations: MutableList<ReservationDTO> = arrayListOf()
 
     override fun toString(): String {
-        return super.toString() + " Client bonuses = $bonuses"
+        return super.toString() + " Client bonuses = $bonuses \n $reservations"
     }
 }

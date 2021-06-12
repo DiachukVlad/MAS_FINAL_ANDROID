@@ -28,6 +28,7 @@ class RegisterViewModel(
     val state = MutableStateFlow(VisibilityState.First)
     val buttonText = MutableStateFlow(strings.get(R.string.next))
     var birthdayText = MutableStateFlow(strings.get(R.string.birthday))
+    var showExtraPhone = MutableStateFlow(false)
 
     val activityEvent = MutableSharedFlow<ActivityEvents>(
         extraBufferCapacity = 1,
@@ -44,6 +45,12 @@ class RegisterViewModel(
     var location = MutableLiveData<String>()
 
     var birthday = System.currentTimeMillis()
+
+    init {
+        phone.observeForever {
+            showExtraPhone.value = it.isNotEmpty()
+        }
+    }
 
     fun onButtonClick() {
         uiScope.launch {
@@ -125,7 +132,6 @@ class RegisterViewModel(
                 surname.value.isNullOrEmpty() ||
                 birthday == 0L ||
                 phone.value.isNullOrEmpty() ||
-                extraPhone.value.isNullOrEmpty() ||
                 location.value.isNullOrEmpty()
 
         if (someEmptyFirst || (state.value == VisibilityState.Second && someEmptySecond)) {

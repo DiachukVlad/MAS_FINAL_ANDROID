@@ -7,6 +7,7 @@ import com.example.mas_final.databinding.ActivityMainBinding
 import com.example.mas_final.extentions.launchWhenCreated
 import com.example.mas_final.extentions.launchWhenStarted
 import com.example.mas_final.viewLayers.views.base.BaseActivity
+import com.example.mas_final.viewLayers.views.book.BookActivity
 import com.example.mas_final.viewLayers.views.login.LoginActivity
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
@@ -17,6 +18,8 @@ class MainActivity : BaseActivity() {
     private val vm: MainViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        observeEvents()
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
@@ -26,12 +29,8 @@ class MainActivity : BaseActivity() {
         binding.bookButton.setOnClickListener { vm.onBookClick() }
 
         showText()
-        observeEvents()
-    }
 
-    override fun onResume() {
-        super.onResume()
-        vm.onCreate()
+        lifecycle.addObserver(vm)
     }
 
     private fun observeEvents() {
@@ -49,12 +48,12 @@ class MainActivity : BaseActivity() {
                     startActivity(
                         Intent(
                             this,
-                            LoginActivity::class.java
+                            BookActivity::class.java
                         )
                     )
                 }
             }
-        }.launchWhenStarted(lifecycleScope)
+        }.launchWhenCreated(lifecycleScope)
     }
 
     private fun showText() {

@@ -49,14 +49,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintText="@string/email"
-                app:icon="@drawable/ic_person"/>
+                app:icon="@drawable/ic_mail"/>
 
             <com.example.mas_final.viewLayers.components.VAField
                 android:id="@+id/pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintText="@string/password"
-                app:icon="@drawable/ic_person"
+                app:icon="@drawable/ic_password"
                 app:password="true"/>
 
             <com.example.mas_final.viewLayers.components.VAField
@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintText="@string/password"
-                app:icon="@drawable/ic_person"
+                app:icon="@drawable/ic_password"
                 app:password="true"/>
 
             <com.example.mas_final.viewLayers.components.VAField
@@ -72,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintText="@string/name"
-                app:icon="@drawable/ic_person"
+                app:icon="@drawable/ic_name"
                 android:visibility="gone"
                 tools:visibility="visible"/>
 
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintText="@string/surname"
-                app:icon="@drawable/ic_person"
+                app:icon="@drawable/ic_surname"
                 android:visibility="gone"
                 tools:visibility="visible"/>
 
@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintText="@string/birthday"
-                app:icon="@drawable/ic_person"
+                app:icon="@drawable/ic_calendar"
                 android:visibility="gone"
                 app:isButton="true"
                 tools:visibility="visible"/>
@@ -100,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintText="@string/phone"
-                app:icon="@drawable/ic_person"
+                app:icon="@drawable/ic_phone"
                 android:visibility="gone"
                 tools:visibility="visible"/>
 
@@ -109,7 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintText="@string/extra_phone"
-                app:icon="@drawable/ic_person"
+                app:icon="@drawable/ic_extra_phone"
                 android:visibility="gone"
                 tools:visibility="visible"/>
 
@@ -118,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintText="@string/location"
-                app:icon="@drawable/ic_person"
+                app:icon="@drawable/ic_location"
                 android:visibility="gone"
                 tools:visibility="visible"/>
         </LinearLayout>

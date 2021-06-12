@@ -39,14 +39,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hintText="@string/email"
-            app:icon="@drawable/ic_person" />
+            app:icon="@drawable/ic_mail" />
 
         <com.example.mas_final.viewLayers.components.VAField
             android:id="@+id/pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hintText="@string/password"
-            app:icon="@drawable/ic_person"
+            app:icon="@drawable/ic_password"
             app:password="true" />
 
         <TextView

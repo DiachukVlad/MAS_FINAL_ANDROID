@@ -76,7 +76,6 @@ class LoginViewModel(
                     activityEvent.tryEmit(ActivityEvents.CloseActivity)
                 }
                 is Error -> {
-                    println(res)
                     when (res.error) {
                         VAError.BadLogin -> error.tryEmit(strings.get(R.string.bad_login))
                         else -> showCommonError(res.error)

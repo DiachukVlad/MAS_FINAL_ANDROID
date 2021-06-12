@@ -1,6 +1,9 @@
 package com.example.mas_final.viewLayers.views.main
 
 import android.app.Application
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.example.mas_final.data.dto.TokenDTO
 import com.example.mas_final.data.entity.Error
 import com.example.mas_final.data.entity.Ok
@@ -22,7 +25,7 @@ class MainViewModel(
     strings: StringProvider,
     private val prefs: Preferences,
     private val personRepository: PersonRepository
-): BaseViewModel(application, strings) {
+): BaseViewModel(application, strings), LifecycleObserver {
     var mainText = MutableStateFlow("")
 
     val activityEvent = MutableSharedFlow<ActivityEvents>(
@@ -30,6 +33,7 @@ class MainViewModel(
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
         val token: TokenDTO? = prefs.token
         if (
@@ -37,11 +41,7 @@ class MainViewModel(
             token.uuid.isEmpty() ||
             token.expirationDate < Calendar.getInstance(TimeZone.getTimeZone("UTC")).timeInMillis
         ) {
-            defScope.launch {
-                //FIXME remove delay
-                delay(1)
-                activityEvent.emit(ActivityEvents.ShowLoginActivity)
-            }
+            activityEvent.tryEmit(ActivityEvents.ShowLoginActivity)
         } else {
             uiScope.launch {
                 when(val res = personRepository.loginToken(token)) {

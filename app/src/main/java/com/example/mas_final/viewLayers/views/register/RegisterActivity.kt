@@ -1,5 +1,6 @@
 package com.example.mas_final.viewLayers.views.register
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -7,6 +8,7 @@ import com.example.mas_final.R
 import com.example.mas_final.databinding.ActivityRegisterBinding
 import com.example.mas_final.extentions.launchWhenCreated
 import com.example.mas_final.viewLayers.views.base.BaseActivity
+import com.example.mas_final.viewLayers.views.main.MainActivity
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.onEach
@@ -18,6 +20,8 @@ class RegisterActivity : BaseActivity() {
     private val vm: RegisterViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        observerEvents()
+
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
 
@@ -30,10 +34,24 @@ class RegisterActivity : BaseActivity() {
         showButtonText()
         showError()
         showBirthday()
+        showExtraPhone()
+    }
 
+    private fun showExtraPhone() {
+        vm.showExtraPhone.onEach {
+            binding.extraPhone.isVisible = it
+        }.launchWhenCreated(lifecycleScope)
+    }
+
+    private fun observerEvents() {
         vm.activityEvent.onEach {
             when (it) {
-                is RegisterViewModel.ActivityEvents.CloseActivity -> finish()
+                is RegisterViewModel.ActivityEvents.CloseActivity -> startActivity(
+                    Intent(
+                        this,
+                        MainActivity::class.java
+                    ).apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK }
+                )
                 is RegisterViewModel.ActivityEvents.ShowDatePicker -> showDatePicker(it.time)
             }
         }.launchWhenCreated(lifecycleScope)
@@ -48,7 +66,7 @@ class RegisterActivity : BaseActivity() {
     private fun showDatePicker(dateToShow: Long) {
         val datePickerBuilder = MaterialDatePicker.Builder.datePicker()
             .setTitleText("Select date")
-        var datePicker: MaterialDatePicker<Long> = datePickerBuilder.build()
+        val datePicker: MaterialDatePicker<Long>
 
         if (dateToShow != 0L) {
             datePickerBuilder.setSelection(dateToShow)
@@ -98,7 +116,7 @@ class RegisterActivity : BaseActivity() {
                 surname.isVisible = it.surname
                 birthday.isVisible = it.birthday
                 phone.isVisible = it.phone
-                extraPhone.isVisible = it.extraPhone
+                extraPhone.isVisible = it.extraPhone && vm.showExtraPhone.value
                 location.isVisible = it.location
             }
         }.launchWhenCreated(lifecycleScope)
