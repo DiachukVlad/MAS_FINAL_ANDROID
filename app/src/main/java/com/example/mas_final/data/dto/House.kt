@@ -10,7 +10,7 @@ class House(
     override var maxPeople: Int = 0
     override var price: Int = 0
     override fun toString(): String {
-        return "House(name=$name, rooms=$rooms, kitchens=$kitchens, bathrooms=$bathrooms, maxPeople=$maxPeople, price=$price)"
+        return "House(id=$id, name=$name, rooms=$rooms, kitchens=$kitchens, bathrooms=$bathrooms, maxPeople=$maxPeople, price=$price)"
     }
 
 

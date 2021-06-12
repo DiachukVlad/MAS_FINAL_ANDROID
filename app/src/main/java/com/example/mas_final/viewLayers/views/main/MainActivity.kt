@@ -3,7 +3,6 @@ package com.example.mas_final.viewLayers.views.main
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mas_final.databinding.ActivityMainBinding
 import com.example.mas_final.extentions.launchWhenCreated
 import com.example.mas_final.helpers.StringProvider

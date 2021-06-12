@@ -14,6 +14,7 @@ import com.example.mas_final.helpers.Preferences
 import com.example.mas_final.helpers.StringProvider
 import com.example.mas_final.repositories.PersonRepository
 import com.example.mas_final.viewLayers.views.base.BaseViewModel
+import com.example.mas_final.viewLayers.views.book.components.BookReservationsAdapter
 import com.example.mas_final.viewLayers.views.main.components.ReservationsAdapter
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow

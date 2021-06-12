@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
+import com.example.mas_final.R
+import com.example.mas_final.data.dto.House
 import com.example.mas_final.data.entity.Error
 import com.example.mas_final.data.entity.Ok
 import com.example.mas_final.extentions.uiScope
@@ -11,7 +13,7 @@ import com.example.mas_final.helpers.StringProvider
 import com.example.mas_final.helpers.UTCHelper
 import com.example.mas_final.repositories.ReservationRepository
 import com.example.mas_final.viewLayers.views.base.BaseViewModel
-import com.example.mas_final.viewLayers.views.main.MainViewModel
+import com.example.mas_final.viewLayers.views.book.components.BookReservationsAdapter
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,6 +28,7 @@ class BookViewModel(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
+    val reservationsAdapter = MutableStateFlow<BookReservationsAdapter?>(null)
 
     val dateFrom = MutableStateFlow(0L)
     val dateTo = MutableStateFlow(0L)
@@ -42,7 +45,22 @@ class BookViewModel(
         uiScope.launch {
             when (val res = reservationRepo.getReservationObjects(utcFrom, utcTo)){
                 is Ok -> {
-                    println("OK ${res.body}")
+                    val reservations = arrayListOf<BookReservationsAdapter.Reservation>()
+
+                    reservations.addAll((res.body.houses + res.body.rooms)
+                        .map {
+                            BookReservationsAdapter.Reservation(
+                                it.name,
+                                it.price,
+                                if (it is House)
+                                    R.drawable.house_image
+                                else
+                                    R.drawable.room_image,
+                                it.id
+                            )
+                        })
+
+                    reservationsAdapter.value = BookReservationsAdapter(reservations, strings)
                 }
                 is Error -> {
 
@@ -53,6 +71,10 @@ class BookViewModel(
 
     fun onCalendarClick() {
         activityEvent.tryEmit(ActivityEvents.ShowDateRangePicker(dateFrom.value, dateTo.value))
+    }
+
+    fun onOkClick() {
+        println(reservationsAdapter.value?.selectedIds)
     }
 
     sealed class ActivityEvents{

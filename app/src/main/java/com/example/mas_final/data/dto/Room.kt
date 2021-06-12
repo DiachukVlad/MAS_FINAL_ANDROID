@@ -11,6 +11,6 @@ class Room(
     override var price: Int = 0
 
     override fun toString(): String {
-        return "Room(name=$name, kitchen=$kitchen, bathroom=$bathroom, refrigerator=$refrigerator, maxPeople=$maxPeople, price=$price)"
+        return "Room(id=$id, name=$name, kitchen=$kitchen, bathroom=$bathroom, refrigerator=$refrigerator, maxPeople=$maxPeople, price=$price)"
     }
 }

@@ -8,6 +8,7 @@
     <color name="background">#E5E5E5</color>
 
     <color name="main_green">#2DA419</color>
+    <color name="light_green">#61E331</color>
     <color name="primary_light">#FBFBFB</color>
     <color name="edit_text_border">#D6E4EC</color>
 </resources>
