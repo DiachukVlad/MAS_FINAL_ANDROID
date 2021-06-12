@@ -2,15 +2,12 @@ package com.example.mas_final.viewLayers.views.login
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.mas_final.R
 import com.example.mas_final.databinding.ActivityLoginBinding
 import com.example.mas_final.extentions.launchWhenCreated
-import com.example.mas_final.viewLayers.views.LoginViewModel
 import com.example.mas_final.viewLayers.views.base.BaseActivity
 import com.example.mas_final.viewLayers.views.register.RegisterActivity
-import com.example.mas_final.viewLayers.views.register.RegisterViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject

@@ -1,9 +1,6 @@
 package com.example.mas_final.data.dao
 
-import com.example.mas_final.data.dto.LoginInfoDTO
-import com.example.mas_final.data.dto.PersonDTO
-import com.example.mas_final.data.dto.TokenDTO
-import com.example.mas_final.data.dto.VAResponseDTO
+import com.example.mas_final.data.dto.*
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -17,8 +14,8 @@ interface PersonDao {
     suspend fun register(@Body person: PersonDTO): VAResponseDTO<TokenDTO>
 
     @POST("api/accounts/loginToken")
-    suspend fun loginToken(@Body tokenDTO: TokenDTO): VAResponseDTO<PersonDTO>
+    suspend fun loginToken(@Body tokenDTO: TokenDTO): VAResponseDTO<ClientDTO>
 
     @POST("api/accounts/login")
-    suspend fun login(@Body loginInfoDTO: LoginInfoDTO): VAResponseDTO<PersonDTO>
+    suspend fun login(@Body loginInfoDTO: LoginInfoDTO): VAResponseDTO<ClientDTO>
 }

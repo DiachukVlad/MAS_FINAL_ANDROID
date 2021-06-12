@@ -2,12 +2,10 @@ package com.example.mas_final.viewLayers.views.main
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.mas_final.databinding.ActivityMainBinding
 import com.example.mas_final.extentions.launchWhenCreated
 import com.example.mas_final.extentions.launchWhenStarted
-import com.example.mas_final.viewLayers.views.LoginViewModel
 import com.example.mas_final.viewLayers.views.base.BaseActivity
 import com.example.mas_final.viewLayers.views.login.LoginActivity
 import kotlinx.coroutines.flow.onEach
@@ -25,6 +23,7 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
 
         binding.exitButton.setOnClickListener { vm.onExitClick() }
+        binding.bookButton.setOnClickListener { vm.onBookClick() }
 
         showText()
         observeEvents()
@@ -39,6 +38,14 @@ class MainActivity : BaseActivity() {
         vm.activityEvent.onEach {
             when (it) {
                 MainViewModel.ActivityEvents.ShowLoginActivity -> {
+                    startActivity(
+                        Intent(
+                            this,
+                            LoginActivity::class.java
+                        )
+                    )
+                }
+                MainViewModel.ActivityEvents.ShowBookActivity -> {
                     startActivity(
                         Intent(
                             this,

@@ -1,9 +1,10 @@
-package com.example.mas_final.viewLayers.views
+package com.example.mas_final.viewLayers.views.login
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.example.mas_final.R
 import com.example.mas_final.data.dto.LoginInfoDTO
+import com.example.mas_final.data.dto.VAError
 import com.example.mas_final.data.entity.Error
 import com.example.mas_final.data.entity.Ok
 import com.example.mas_final.extentions.sha256
@@ -25,7 +26,7 @@ class LoginViewModel(
     var email = MutableLiveData<String>()
     var pass = MutableLiveData<String>()
 
-    val activityEvent = MutableSharedFlow<LoginViewModel.ActivityEvents>(
+    val activityEvent = MutableSharedFlow<ActivityEvents>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
@@ -70,11 +71,17 @@ class LoginViewModel(
         uiScope.launch {
             when (val res = personRepo.login(buildLoginInfo())) {
                 is Ok -> {
-                    prefs.person = res.body
+                    prefs.client = res.body
                     prefs.token = res.body.token
                     activityEvent.tryEmit(ActivityEvents.CloseActivity)
                 }
-                is Error -> showCommonError(res.error)
+                is Error -> {
+                    println(res)
+                    when (res.error) {
+                        VAError.BadLogin -> error.tryEmit(strings.get(R.string.bad_login))
+                        else -> showCommonError(res.error)
+                    }
+                }
             }
         }
     }

@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MAS_FINAL"
         android:usesCleartextTraffic="true">
-        <activity android:name=".viewLayers.views.login.LoginActivity"
+        <activity android:name=".viewLayers.views.book.BookActivity"></activity>
+        <activity
+            android:name=".viewLayers.views.login.LoginActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".viewLayers.views.register.RegisterActivity"

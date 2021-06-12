@@ -3,7 +3,7 @@ package com.example.mas_final.viewLayers.views.register
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.example.mas_final.R
-import com.example.mas_final.data.dto.PersonDTO
+import com.example.mas_final.data.dto.ClientDTO
 import com.example.mas_final.data.entity.Error
 import com.example.mas_final.data.entity.Ok
 import com.example.mas_final.extentions.sha256
@@ -76,11 +76,11 @@ class RegisterViewModel(
     }
 
     private suspend fun register() {
-        val person = buildPerson()
-        when (val res = personRepo.register(person)) {
+        val client = buildPerson()
+        when (val res = personRepo.register(client)) {
             is Ok -> {
                 prefs.token = res.body
-                prefs.person = person
+                prefs.client = client
 
                 activityEvent.tryEmit(ActivityEvents.CloseActivity)
             }
@@ -90,7 +90,7 @@ class RegisterViewModel(
         }
     }
 
-    private fun buildPerson() = PersonDTO(
+    private fun buildPerson() = ClientDTO(
         name.value!!,
         surname.value!!,
         birthday,

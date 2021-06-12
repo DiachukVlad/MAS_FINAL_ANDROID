@@ -15,10 +15,11 @@ open class BaseRepository {
             val response = withContext(ioScope.coroutineContext) { call() }
                 ?: return Error(VAError.EmptyResponse)
 
-            val body = response.body ?: return Error(VAError.EmptyResponse)
             response.error.let {
                 if (it != null) return Error(it)
             }
+
+            val body = response.body ?: return Error(VAError.EmptyResponse)
 
             return Ok(body)
         } catch (e: ConnectException) {
