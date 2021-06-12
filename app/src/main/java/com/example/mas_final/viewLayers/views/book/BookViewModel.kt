@@ -39,9 +39,6 @@ class BookViewModel(
         val utcFrom = UTCHelper().toUTC(dateFrom.value)
         val utcTo = UTCHelper().toUTC(dateTo.value)
 
-        println("utcFrom = ${utcFrom}")
-        println("utcTo = ${utcTo}")
-
         uiScope.launch {
             when (val res = reservationRepo.getReservationObjects(utcFrom, utcTo)){
                 is Ok -> {

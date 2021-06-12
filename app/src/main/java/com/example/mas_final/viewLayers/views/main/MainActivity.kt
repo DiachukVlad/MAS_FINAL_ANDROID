@@ -3,12 +3,14 @@ package com.example.mas_final.viewLayers.views.main
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mas_final.databinding.ActivityMainBinding
 import com.example.mas_final.extentions.launchWhenCreated
-import com.example.mas_final.extentions.launchWhenStarted
+import com.example.mas_final.helpers.StringProvider
 import com.example.mas_final.viewLayers.views.base.BaseActivity
 import com.example.mas_final.viewLayers.views.book.BookActivity
 import com.example.mas_final.viewLayers.views.login.LoginActivity
+import com.example.mas_final.viewLayers.views.main.components.ReservationsAdapter
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
 
@@ -16,6 +18,7 @@ class MainActivity : BaseActivity() {
     lateinit var binding: ActivityMainBinding
 
     private val vm: MainViewModel by inject()
+    private val strings: StringProvider by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         observeEvents()
@@ -28,9 +31,19 @@ class MainActivity : BaseActivity() {
         binding.exitButton.setOnClickListener { vm.onExitClick() }
         binding.bookButton.setOnClickListener { vm.onBookClick() }
 
-        showText()
-
         lifecycle.addObserver(vm)
+
+        showReservations()
+    }
+
+    private fun showReservations() {
+        vm.reservations.onEach {
+            if (it.isEmpty()) return@onEach
+
+            val adapter = ReservationsAdapter(vm.reservations.value, strings)
+            binding.recycler.adapter = adapter
+
+        }.launchWhenCreated(lifecycleScope)
     }
 
     private fun observeEvents() {
@@ -53,12 +66,6 @@ class MainActivity : BaseActivity() {
                     )
                 }
             }
-        }.launchWhenCreated(lifecycleScope)
-    }
-
-    private fun showText() {
-        vm.mainText.onEach {
-            binding.test.text = it
         }.launchWhenCreated(lifecycleScope)
     }
 }

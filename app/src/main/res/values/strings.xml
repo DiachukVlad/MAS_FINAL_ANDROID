@@ -26,4 +26,8 @@
     <string name="book">Book</string>
     <string name="bad_login">Bad email or password</string>
     <string name="rooms">Rooms</string>
+    <string name="log_in">Log in</string>
+    <string name="your_reservations">Your reservations</string>
+    <string name="price_format">%d $</string>
+    <string name="reservation_range_format">From %s\nTo %s</string>
 </resources>

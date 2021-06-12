@@ -29,7 +29,7 @@
             android:id="@+id/subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sign_up"
+            android:text="@string/log_in"
             android:textSize="18sp"
             android:textColor="@color/black"
             android:layout_marginBottom="16dp" />
