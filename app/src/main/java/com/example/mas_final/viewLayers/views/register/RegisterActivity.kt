@@ -32,7 +32,7 @@ class RegisterActivity : BaseActivity() {
 
         showState()
         showButtonText()
-        showError()
+        showError(vm.error)
         showBirthday()
         showExtraPhone()
     }
@@ -77,14 +77,6 @@ class RegisterActivity : BaseActivity() {
                 vm.onDateChange(it)
             }
         }
-    }
-
-    private fun showError() {
-        vm.error.onEach {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT)
-                .setBackgroundTint(getColor(R.color.red))
-                .show()
-        }.launchWhenCreated(lifecycleScope)
     }
 
     override fun connectToLiveData() = binding.run {

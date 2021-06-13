@@ -92,7 +92,7 @@ class RegisterViewModel(
                 activityEvent.tryEmit(ActivityEvents.CloseActivity)
             }
             is Error -> {
-                showCommonError(res.error)
+                showCommonErrors(res.error)
             }
         }
     }
@@ -159,7 +159,7 @@ class RegisterViewModel(
             }
 
             is Error -> {
-                showCommonError(res.error)
+                showCommonErrors(res.error)
                 false
             }
         }

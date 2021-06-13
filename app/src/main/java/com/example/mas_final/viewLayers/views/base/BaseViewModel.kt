@@ -14,7 +14,7 @@ open class BaseViewModel(application: Application, protected val strings: String
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
 
-    protected fun showCommonError(vaError: VAError) {
+    protected fun showCommonErrors(vaError: VAError) {
         when (vaError) {
             VAError.ServerIsUnavailable -> error.tryEmit(strings.get(R.string.server_is_unavailable))
             else -> error.tryEmit(strings.get(R.string.unexpected_error))

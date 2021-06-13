@@ -7,16 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mas_final.R
 import com.example.mas_final.databinding.ObjectLayoutBinding
 import com.example.mas_final.helpers.StringProvider
-import com.example.mas_final.helpers.UTCHelper
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 
 class BookReservationsAdapter(var reservations: List<Reservation>, private val strings: StringProvider) :
     RecyclerView.Adapter<BookReservationsAdapter.ReservationsViewHolder>() {
 
-    var selectedIds = hashSetOf<Int>()
+    var selectedReservations: HashSet<Reservation> = hashSetOf()
 
     class ReservationsViewHolder(private val binding: ObjectLayoutBinding, private val strings: StringProvider) :
         RecyclerView.ViewHolder(binding.root) {
@@ -58,9 +55,9 @@ class BookReservationsAdapter(var reservations: List<Reservation>, private val s
         holder.reservation = reservations[position]
         holder.onSelected = {
             if (it) {
-                selectedIds.add(reservations[position].id)
+                selectedReservations.add(reservations[position])
             } else {
-                selectedIds.remove(reservations[position].id)
+                selectedReservations.remove(reservations[position])
             }
         }
     }

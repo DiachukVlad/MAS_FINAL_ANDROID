@@ -14,6 +14,7 @@ import com.example.mas_final.helpers.UTCHelper
 import com.example.mas_final.repositories.ReservationRepository
 import com.example.mas_final.viewLayers.views.base.BaseViewModel
 import com.example.mas_final.viewLayers.views.book.components.BookReservationsAdapter
+import com.google.gson.Gson
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,13 +23,14 @@ import kotlinx.coroutines.launch
 class BookViewModel(
     application: Application,
     strings: StringProvider,
-    val reservationRepo: ReservationRepository
+    private val reservationRepo: ReservationRepository
 ): BaseViewModel(application, strings), LifecycleObserver{
     val activityEvent = MutableSharedFlow<ActivityEvents>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
     val reservationsAdapter = MutableStateFlow<BookReservationsAdapter?>(null)
+    val noAvailableVisibility = MutableStateFlow(false)
 
     val dateFrom = MutableStateFlow(0L)
     val dateTo = MutableStateFlow(0L)
@@ -61,9 +63,11 @@ class BookViewModel(
                         })
 
                     reservationsAdapter.value = BookReservationsAdapter(reservations, strings)
+
+                    noAvailableVisibility.value = reservations.isEmpty()
                 }
                 is Error -> {
-
+                    showCommonErrors(res.error)
                 }
             }
         }
@@ -74,10 +78,16 @@ class BookViewModel(
     }
 
     fun onOkClick() {
-        println(reservationsAdapter.value?.selectedIds)
+        val selected = reservationsAdapter.value?.selectedReservations
+        if (selected != null && selected.isNotEmpty()) {
+            activityEvent.tryEmit(ActivityEvents.ShowConfirmationActivity(Gson().toJson(selected), dateFrom.value, dateTo.value))
+        } else {
+            error.tryEmit(strings.get(R.string.please_select_objects))
+        }
     }
 
     sealed class ActivityEvents{
         class ShowDateRangePicker(val from: Long, val to: Long): ActivityEvents()
+        class ShowConfirmationActivity(val reservations: String, val dateFrom: Long, val dateTo: Long): ActivityEvents()
     }
 }

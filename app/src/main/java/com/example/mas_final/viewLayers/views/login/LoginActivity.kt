@@ -9,6 +9,7 @@ import com.example.mas_final.extentions.launchWhenCreated
 import com.example.mas_final.viewLayers.views.base.BaseActivity
 import com.example.mas_final.viewLayers.views.register.RegisterActivity
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.onEach
 import org.koin.android.ext.android.inject
 
@@ -22,7 +23,7 @@ class LoginActivity : BaseActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-        showError()
+        showError(vm.error)
 
         binding.button.setOnClickListener { vm.onLoginClick() }
         binding.createButton.setOnClickListener { vm.onCreateAccClick() }
@@ -42,13 +43,5 @@ class LoginActivity : BaseActivity() {
             email to vm.email,
             pass to vm.pass
         )
-    }
-
-    private fun showError() {
-        vm.error.onEach {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT)
-                .setBackgroundTint(getColor(R.color.red))
-                .show()
-        }.launchWhenCreated(lifecycleScope)
     }
 }

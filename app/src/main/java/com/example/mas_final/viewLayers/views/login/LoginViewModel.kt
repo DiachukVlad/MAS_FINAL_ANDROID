@@ -78,7 +78,7 @@ class LoginViewModel(
                 is Error -> {
                     when (res.error) {
                         VAError.BadLogin -> error.tryEmit(strings.get(R.string.bad_login))
-                        else -> showCommonError(res.error)
+                        else -> showCommonErrors(res.error)
                     }
                 }
             }

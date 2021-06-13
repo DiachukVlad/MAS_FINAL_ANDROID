@@ -72,6 +72,7 @@ class MainViewModel(
                         reservations.value = reserves
                     }
                     is Error -> {
+                        showCommonErrors(res.error)
                         activityEvent.tryEmit(ActivityEvents.ShowLoginActivity)
                     }
                 }
