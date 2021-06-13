@@ -56,7 +56,7 @@ class BookActivity : BaseActivity() {
                     val intent = Intent(this, ConfirmationActivity::class.java)
                     intent.putExtra(ConfirmationActivity.RESERVATIONS_JSON, it.reservations)
                     intent.putExtra(ConfirmationActivity.DATE_FROM, it.dateFrom)
-                    intent.putExtra(ConfirmationActivity.DATE_TO, it.dateFrom)
+                    intent.putExtra(ConfirmationActivity.DATE_TO, it.dateTo)
                     startActivity(intent)
                 }
             }

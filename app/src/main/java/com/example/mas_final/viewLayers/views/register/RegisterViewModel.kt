@@ -102,10 +102,13 @@ class RegisterViewModel(
         surname.value!!,
         birthday,
         location.value!!,
-        listOf(
-            phone.value!!,
-            extraPhone.value!!
-        ),
+        if (extraPhone.value!=null)
+            listOf(
+                phone.value!!,
+                extraPhone.value!!
+            )
+        else
+            listOf(phone.value!!),
         email.value!!,
         sha256(pass.value!!),
     )
