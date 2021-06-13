@@ -2,6 +2,7 @@ package com.example.mas_final.viewLayers.views.main
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.example.mas_final.databinding.ActivityMainBinding
 import com.example.mas_final.extentions.launchWhenCreated
@@ -22,6 +23,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         observeEvents()
         showError(vm.error)
+        showNoReservations()
 
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -36,9 +38,18 @@ class MainActivity : BaseActivity() {
         showReservations()
     }
 
+    private fun showNoReservations() {
+        vm.noReservationsVisibility.onEach {
+            binding.noReservations.isVisible = it
+        }.launchWhenCreated(lifecycleScope)
+    }
+
     private fun showReservations() {
         vm.reservations.onEach {
-            if (it.isEmpty()) return@onEach
+            if (it.isEmpty()) {
+                binding.recycler.adapter = null
+                return@onEach
+            }
 
             val adapter = ReservationsAdapter(vm.reservations.value, strings)
             binding.recycler.adapter = adapter

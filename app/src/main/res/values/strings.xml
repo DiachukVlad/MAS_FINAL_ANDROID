@@ -37,4 +37,5 @@
     <string name="confirm_format">%s %s\n%s\n%s\nFrom %s to %s</string>
     <string name="no_available">Sorry there are no available objects on this dates</string>
     <string name="success">Success</string>
+    <string name="you_have_no_reservations">You have`t any reservations yet</string>
 </resources>

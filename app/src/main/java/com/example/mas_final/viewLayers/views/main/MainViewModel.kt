@@ -34,6 +34,7 @@ class MainViewModel(
     )
 
     val reservations = MutableStateFlow<List<ReservationsAdapter.Reservation>>(arrayListOf())
+    val noReservationsVisibility = MutableStateFlow(false)
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
@@ -70,6 +71,8 @@ class MainViewModel(
                         }
 
                         reservations.value = reserves
+
+                        noReservationsVisibility.value = reserves.isEmpty()
                     }
                     is Error -> {
                         showCommonErrors(res.error)
