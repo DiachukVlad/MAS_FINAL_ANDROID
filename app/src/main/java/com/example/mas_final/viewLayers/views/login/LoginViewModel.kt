@@ -14,6 +14,7 @@ import com.example.mas_final.helpers.StringProvider
 import com.example.mas_final.repositories.PersonRepository
 import com.example.mas_final.viewLayers.views.base.BaseViewModel
 import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
@@ -86,6 +87,12 @@ class LoginViewModel(
     }
 
     private fun buildLoginInfo() = LoginInfoDTO(email.value ?: "", sha256(pass.value ?: ""))
+    fun notAvailable() {
+        uiScope.launch {
+            delay(1)
+            error.tryEmit(strings.get(R.string.server_is_unavailable))
+        }
+    }
 
     sealed class ActivityEvents {
         object ShowRegisterActivity : ActivityEvents()

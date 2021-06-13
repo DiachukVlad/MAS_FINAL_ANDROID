@@ -60,15 +60,17 @@ class MainActivity : BaseActivity() {
     private fun observeEvents() {
         vm.activityEvent.onEach {
             when (it) {
-                MainViewModel.ActivityEvents.ShowLoginActivity -> {
+                is MainViewModel.ActivityEvents.ShowLoginActivity -> {
                     startActivity(
                         Intent(
                             this,
                             LoginActivity::class.java
-                        )
+                        ).apply {
+                            putExtra(LoginActivity.AVAILABLE, it.available)
+                        }
                     )
                 }
-                MainViewModel.ActivityEvents.ShowBookActivity -> {
+                is MainViewModel.ActivityEvents.ShowBookActivity -> {
                     startActivity(
                         Intent(
                             this,

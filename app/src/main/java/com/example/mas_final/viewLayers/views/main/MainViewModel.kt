@@ -17,6 +17,7 @@ import com.example.mas_final.viewLayers.views.base.BaseViewModel
 import com.example.mas_final.viewLayers.views.book.components.BookReservationsAdapter
 import com.example.mas_final.viewLayers.views.main.components.ReservationsAdapter
 import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -44,7 +45,7 @@ class MainViewModel(
             token.uuid.isEmpty() ||
             token.expirationDate < Calendar.getInstance(TimeZone.getTimeZone("UTC")).timeInMillis
         ) {
-            activityEvent.tryEmit(ActivityEvents.ShowLoginActivity)
+            activityEvent.tryEmit(ActivityEvents.ShowLoginActivity())
         } else {
             uiScope.launch {
                 when (val res = personRepository.loginToken(token)) {
@@ -75,8 +76,7 @@ class MainViewModel(
                         noReservationsVisibility.value = reserves.isEmpty()
                     }
                     is Error -> {
-                        showCommonErrors(res.error)
-                        activityEvent.tryEmit(ActivityEvents.ShowLoginActivity)
+                        activityEvent.tryEmit(ActivityEvents.ShowLoginActivity(false))
                     }
                 }
             }
@@ -86,7 +86,7 @@ class MainViewModel(
     fun onExitClick() {
         prefs.token = null
         prefs.client = null
-        activityEvent.tryEmit(ActivityEvents.ShowLoginActivity)
+        activityEvent.tryEmit(ActivityEvents.ShowLoginActivity())
     }
 
     fun onBookClick() {
@@ -94,7 +94,7 @@ class MainViewModel(
     }
 
     sealed class ActivityEvents {
-        object ShowLoginActivity : ActivityEvents()
+        class ShowLoginActivity(val available: Boolean = true) : ActivityEvents()
         object ShowBookActivity : ActivityEvents()
     }
 }

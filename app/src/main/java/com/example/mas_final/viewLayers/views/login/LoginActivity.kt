@@ -36,6 +36,10 @@ class LoginActivity : BaseActivity() {
                 )
             }
         }.launchWhenCreated(lifecycleScope)
+
+        if (!intent.getBooleanExtra(AVAILABLE, true)) {
+            vm.notAvailable()
+        }
     }
 
     override fun connectToLiveData() = binding.run {
@@ -43,5 +47,9 @@ class LoginActivity : BaseActivity() {
             email to vm.email,
             pass to vm.pass
         )
+    }
+
+    companion object {
+        const val AVAILABLE = "available"
     }
 }
